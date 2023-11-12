@@ -1,14 +1,28 @@
 {
   "name": "diffrss2",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.4.0",
+  "description": "diff RSS for Azure Functions 4",
   "scripts": {
+    "test": "standard",
+    "IHaveNotWrittenTests": "standard && jest",
+    "azurite": "azurite --silent --location /c/azurite --debug /c/azurite/debug.log",
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "clean-azurite": "rm -rf /c/azurite/*",
+    "deploy": "func azure functionapp publish DiffRss"
   },
   "dependencies": {
-    "@azure/functions": "^4.0.0",
-    "durable-functions": "^3.0.0-alpha.5"
+    "@azure/functions": "^4.0.1",
+    "@line/bot-sdk": "^8.0.1",
+    "durable-functions": "^3.0.0",
+    "rss-parser": "^3.13.0"
   },
-  "main": "src/functions/*.js"
+  "main": "src/functions/*.js",
+  "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
+    "babel-jest": "^29.7.0",
+    "expect": "^29.7.0",
+    "jest": "^29.7.0",
+    "standard": "*"
+  }
 }
