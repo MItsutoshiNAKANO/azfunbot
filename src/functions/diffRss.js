@@ -2,7 +2,7 @@
 'use strict'
 const { app } = require('@azure/functions')
 const df = require('durable-functions')
-const watch = require('../lib/rss-watcher.js')
+const watch = require('../lib/rss-watcher')
 
 app.timer('diffRss', {
   schedule: process.env.DIFFRSS_SCHEDULE,
