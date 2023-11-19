@@ -5,9 +5,9 @@
   "scripts": {
     "test": "standard",
     "IHaveNotWrittenTests": "standard && jest",
-    "azurite": "azurite --silent --location /c/azurite --debug /c/azurite/debug.log",
+    "azurite": "azurite --silent --location .cache/azurite --debug .cache/azurite/debug.log",
     "start": "func start",
-    "clean-azurite": "rm -rf /c/azurite/*",
+    "clean-azurite": "rm -rf .cache/azurite/",
     "deploy": "func azure functionapp publish DiffRss"
   },
   "dependencies": {
