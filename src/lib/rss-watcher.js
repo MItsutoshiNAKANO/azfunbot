@@ -1,30 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 'use strict'
-
-const df = require('durable-functions')
 const Parser = require('rss-parser')
+const df = require('durable-functions')
 const entityName = 'saver'
-const send = require('./send-line.js')
 
 const parser = new Parser()
 
 function differ (current, previous, context) {
   if (previous == null) {
-    // context.log('previous == null')
+    context.log('previous == null')
     return current
   }
   if (current == null) {
-    // context.warn('illegal current format')
+    context.warn('illegal current format')
     return []
   }
+  context.log(`current: ${current.length}, previous: ${previous.length}`)
   const map = new Map()
   current.forEach((item) => { map.set(item.link, item) })
-  if (previous != null) {
-    previous.forEach((item) => { map.delete(item.link) })
-  }
+  previous.forEach((item) => { map.delete(item.link) })
   const diff = []
   map.forEach((item) => { diff.push(item) })
-  // context.log(`${diff.length} differs`)
+  context.log(`${diff.length} differs`)
   return diff
 }
 
@@ -51,17 +48,24 @@ module.exports = async (urls, myTimer, context) => {
   }
   // context.log({ current })
 
-  const previous = client.readEntityState(entityId).entityState
-  context.log({ previous })
+  const response = await client.readEntityState(entityId)
+  // context.log({ response })
+  const previous = response.entityState
+  // context.log({ previous })
   const diff = differ(current, previous, context)
   // context.log({ diff })
   if (diff.length < 1) {
     context.log('return void')
     return
   }
-  client.signalEntity(entityId, 'post', current)
+  await client.signalEntity(entityId, 'post', current)
   const text = head(5000, diff.map(i => `${i.link} ${i.title}`)).join('\r\n')
   const length = text.length
-  context.log({ text, length })
-  return await send(context, text)
+  context.log({ length })
+  try {
+    return await require('./send-line')(text)
+  } catch (err) {
+    context.error(err)
+    throw err
+  }
 }
