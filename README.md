@@ -1,6 +1,6 @@
-# RSS checker for Azure Functions
+# RSS checker 2 for Azure Functions
 
-## How to run in your local Windows
+## How to run this in your local Windows
 
-1) azurite --silent --location c:\azurite --debug c:\azurite\debug.log
-2) npm run start
+1) azurite --silent --location .cache/azurite --debug .cache/azurite/debug.log
+2) func start --verbose
