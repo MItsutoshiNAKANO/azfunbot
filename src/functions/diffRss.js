@@ -13,11 +13,11 @@ app.timer('diffRss', {
       'https://jvn.jp/rss/jvn.rdf',
       'https://gihyo.jp/feed/atom',
       'http://feeds.japan.zdnet.com/rss/zdnet/all.rdf',
-      'https://rss.itmedia.co.jp/rss/2.0/ait.xml',
-      'https://rss.itmedia.co.jp/rss/2.0/keymans.xml',
-      'https://rss.itmedia.co.jp/rss/2.0/techtarget.xml',
-      'https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml',
-      'https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf'
+      'https://rss.itmedia.co.jp/rss/2.0/ait.xml' // ,
+      // 'https://rss.itmedia.co.jp/rss/2.0/keymans.xml',
+      // 'https://rss.itmedia.co.jp/rss/2.0/techtarget.xml',
+      // 'https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml',
+      // 'https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf'
     ]
     return watch(URLS, myTimer, context)
   }
