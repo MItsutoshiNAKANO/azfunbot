@@ -11,6 +11,7 @@ app.timer('diffRss', {
     const URLS = [
       'https://www.ipa.go.jp/security/alert-rss.rdf',
       'https://jvn.jp/rss/jvn.rdf',
+      'https://b.hatena.ne.jp/Itisango/bookmark.rss',
       'https://gihyo.jp/feed/atom',
       'http://feeds.japan.zdnet.com/rss/zdnet/all.rdf',
       'https://rss.itmedia.co.jp/rss/2.0/ait.xml' // ,
