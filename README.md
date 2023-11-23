@@ -49,6 +49,7 @@ az login
 * LINE_ID
 * LINE_ACCESS_TOKEN
 * DIFFRSS_SCHEDULE
+* DIFFRSS_MAX_CHAR_LIMIT
 
 ### 5) Publish DiffRss
 

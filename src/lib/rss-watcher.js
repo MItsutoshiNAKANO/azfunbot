@@ -59,7 +59,8 @@ module.exports = async (urls, myTimer, context) => {
     return
   }
   await client.signalEntity(entityId, 'post', current)
-  const text = head(5000, diff.map(i => `${i.link} ${i.title}`)).join('\r\n')
+  const text = head(Math.min(process.env.DIFFRSS_MAX_CHAR_LIMIT, 5000),
+    diff.map(i => `${i.link} ${i.title}`)).join('\r\n')
   const length = text.length
   context.log({ length })
   try {
