@@ -11,12 +11,14 @@ app.timer('diffRss', {
     const URLS = [
       'https://www.ipa.go.jp/security/alert-rss.rdf',
       'https://jvn.jp/rss/jvn.rdf',
+      'https://www.ipa.go.jp/about/newsonly-rss.rdf',
+      'https://www.ipa.go.jp/about/press-rss.rdf',
       'https://b.hatena.ne.jp/Itisango/bookmark.rss',
       'https://gihyo.jp/feed/atom',
       'http://feeds.japan.zdnet.com/rss/zdnet/all.rdf',
-      'https://rss.itmedia.co.jp/rss/2.0/ait.xml' // ,
-      // 'https://rss.itmedia.co.jp/rss/2.0/keymans.xml',
-      // 'https://rss.itmedia.co.jp/rss/2.0/techtarget.xml',
+      'https://rss.itmedia.co.jp/rss/2.0/ait.xml',
+      'https://rss.itmedia.co.jp/rss/2.0/keymans.xml',
+      'https://rss.itmedia.co.jp/rss/2.0/techtarget.xml' //,
       // 'https://rss.itmedia.co.jp/rss/2.0/itmedia_all.xml',
       // 'https://www.watch.impress.co.jp/data/rss/1.0/ipw/feed.rdf'
     ]

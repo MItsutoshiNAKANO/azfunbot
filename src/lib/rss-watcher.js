@@ -17,19 +17,12 @@ function differ (current, previous, context) {
   }
   context.log(`current: ${current.length}, previous: ${previous.length}`)
   const map = new Map()
-  current.forEach((item) => { map.set(item.link, item) })
-  previous.forEach((item) => { map.delete(item.link) })
+  current.forEach((item) => { map.set(item.link, item.title) })
+  previous.forEach((link) => { map.delete(link) })
   const diff = []
-  map.forEach((item) => { diff.push(item) })
+  map.forEach((item) => { diff.push({ link: item.link, title: item.title }) })
   context.log(`${diff.length} differs`)
   return diff
-}
-
-function head (chars, lines) {
-  return lines.filter(line => {
-    chars -= line.length + 2
-    return chars > 0
-  })
 }
 
 module.exports = async (urls, myTimer, context) => {
@@ -41,9 +34,7 @@ module.exports = async (urls, myTimer, context) => {
   for (const url of urls) {
     const feed = await parser.parseURL(url)
     current = current.concat(feed.items.map(i => {
-      const title = i.title
-      const link = i.link
-      return { link, title }
+      return { link: i.link, title: i.title }
     }))
   }
   // context.log({ current })
@@ -58,13 +49,10 @@ module.exports = async (urls, myTimer, context) => {
     context.log('return void')
     return
   }
-  await client.signalEntity(entityId, 'post', current)
-  const text = head(Math.min(process.env.DIFFRSS_MAX_CHAR_LIMIT, 5000),
-    diff.map(i => `${i.link} ${i.title}`)).join('\r\n')
-  const length = text.length
-  context.log({ length })
+  const send = require('./send-line')
+  await client.signalEntity(entityId, 'post', current.map((i) => i.link))
   try {
-    return await require('./send-line')(text)
+    return await send(diff.map(i => `${i.link} ${i.title}`), context)
   } catch (err) {
     context.error(err)
     throw err
