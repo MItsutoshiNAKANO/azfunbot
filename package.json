@@ -1,6 +1,6 @@
 {
   "name": "diffrss2",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "diff RSS for Azure Functions 4",
   "scripts": {
     "test": "standard",
@@ -18,11 +18,13 @@
   },
   "main": "src/functions/*.js",
   "devDependencies": {
+    "standard": ">=17.1.0"
+  },
+  "IWillTestBy": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "babel-jest": "^29.7.0",
     "expect": "^29.7.0",
-    "jest": "^29.7.0",
-    "standard": ">=17.1.0"
+    "jest": "^29.7.0"
   }
 }
