@@ -1,6 +1,6 @@
 {
   "name": "diffrss2",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "diff RSS for Azure Functions 4",
   "scripts": {
     "test": "standard",

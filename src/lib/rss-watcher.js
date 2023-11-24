@@ -20,7 +20,7 @@ function differ (current, previous, context) {
   current.forEach((item) => { map.set(item.link, item.title) })
   previous.forEach((link) => { map.delete(link) })
   const diff = []
-  map.forEach((item) => { diff.push({ link: item.link, title: item.title }) })
+  map.forEach((title, link) => { diff.push({ link, title }) })
   context.log(`${diff.length} differs`)
   return diff
 }
