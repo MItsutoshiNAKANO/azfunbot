@@ -8,3 +8,7 @@ __queuestorage__
 local.settings.json
 test
 tsconfig.json
+
+# private files
+/secrets
+/scripts
