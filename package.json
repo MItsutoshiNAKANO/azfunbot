@@ -1,7 +1,7 @@
 {
-  "name": "diffrss2",
-  "version": "0.8.0",
-  "description": "diff RSS for Azure Functions 4",
+  "name": "azfunbot",
+  "version": "0.9.0",
+  "description": "Bot for Azure Functions 4",
   "scripts": {
     "test": "standard",
     "IHaveNotWrittenTests": "standard && jest",
