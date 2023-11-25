@@ -16,10 +16,10 @@ vim secrets/create-remote.rc.bash
 eg.
 
 ```bash
-resource_group='DiffRss-rg'
-location='japanwest'
-storage_name='diffrssstorage'
-sku='Standard_LRS'
+resource_group="${resource_group-DiffRss-rg}"
+location="${location-japanwest}" 
+storage_name="${storage_name-diffrssstorage}"
+sku="${sku-Standard_LRS}"
 ```
 
 @see create-remote.bash
@@ -49,9 +49,12 @@ az login
 * LINE_ID
 * LINE_ACCESS_TOKEN
 * DIFFRSS_SCHEDULE
+* TELL_SCHEDULE
 * DIFFRSS_MAX_CHAR_LIMIT
 
 ### 5) Publish DiffRss
+
+e.g.
 
 ```bash
 func azure functionapp publish DiffRss
