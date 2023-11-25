@@ -46,11 +46,13 @@ az login
 
 #### Define them
 
-* LINE_ID
-* LINE_ACCESS_TOKEN
-* DIFFRSS_SCHEDULE
-* TELL_SCHEDULE
-* DIFFRSS_MAX_CHAR_LIMIT
+```conf
+LINE_ID={Your LINE ID}
+LINE_ACCESS_TOKEN={Your Access Token}
+DIFFRSS_SCHEDULE={Schedule to Watch RSS (e.g. 1 1 9 * * *)}
+TELL_SCHEDULE={Schedule to tell to Users (e.g. 1 2 9 * * *)}
+DIFFRSS_MAX_CHAR_LIMIT={Max Limit for LINE Text}
+```
 
 ### 5) Publish DiffRss
 
