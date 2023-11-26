@@ -9,6 +9,6 @@ local.settings.json
 test
 tsconfig.json
 
-# private files
+# addes files
 /secrets
 /scripts
