@@ -30,11 +30,6 @@ app.timer('tell', {
     }
     const send = require('../lib/send-line')
     await client.signalEntity(entityId, 'post', newSchedule)
-    try {
-      return await send(text, context)
-    } catch (err) {
-      context.error(err)
-      throw err
-    }
+    return await send(text, context)
   }
 })

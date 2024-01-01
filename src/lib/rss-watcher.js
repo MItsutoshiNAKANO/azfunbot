@@ -51,10 +51,5 @@ module.exports = async (urls, myTimer, context) => {
   }
   const send = require('./send-line')
   await client.signalEntity(entityId, 'post', current.map((i) => i.link))
-  try {
-    return await send(diff.map(i => `${i.link} ${i.title}`), context)
-  } catch (err) {
-    context.error(err)
-    throw err
-  }
+  return await send(diff.map(i => `${i.link} ${i.title}`), context)
 }

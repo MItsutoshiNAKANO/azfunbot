@@ -9,10 +9,28 @@ module.exports = async (lines, context) => {
   /**
    * @see https://github.com/line/line-bot-sdk-nodejs/blob/master/docs/guide/client.md
    */
-  const MessagingApiClient = require('@line/bot-sdk').messagingApi.MessagingApiClient
-  return await new MessagingApiClient({
-    channelAccessToken: process.env.LINE_ACCESS_TOKEN
-  }).pushMessage({
-    to: process.env.LINE_ID, messages: [{ type: 'text', text }]
-  })
+  const { messagingApi, HTTPError } = require('@line/bot-sdk')
+  const MessagingApiClient = messagingApi.MessagingApiClient
+  try {
+    return await new MessagingApiClient({
+      channelAccessToken: process.env.LINE_ACCESS_TOKEN
+    }).pushMessage({
+      to: process.env.LINE_ID, messages: [{ type: 'text', text }]
+    })
+  } catch (err) {
+    context.error(err)
+    try {
+      const sendMail = require('./mail-sender')
+      sendMail(context, process.env.AZFUNBOT_MAIL_TO_ADMIN,
+        'LINE was failed', err)
+    } catch (mailErr) { context.error(mailErr) }
+    if (err instanceof HTTPError && err.statusCode === 429) {
+      const df = require('durable-functions')
+      const entityName = 'saver'
+      const client = df.getClient(context)
+      const entityId = new df.EntityId(entityName, 'lastRateError')
+      await client.signalEntity(entityId, 'post', new Date())
+    }
+    throw err
+  }
 }
