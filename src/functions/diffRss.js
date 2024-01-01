@@ -3,11 +3,19 @@
 const { app } = require('@azure/functions')
 const df = require('durable-functions')
 const watch = require('../lib/rss-watcher')
+const entityName = 'saver'
 
 app.timer('diffRss', {
   schedule: process.env.DIFFRSS_SCHEDULE,
   extraInputs: [df.input.durableClient()],
-  handler: (myTimer, context) => {
+  handler: async (myTimer, context) => {
+    const client = df.getClient(context)
+    const entityId = new df.EntityId(entityName, 'lastRateError')
+    const response = await client.readEntityState(entityId)
+    const lastRateError = response.entityState
+    if (lastRateError &&
+      Date.now() - lastRateError.getTime() <=
+      process.env.AZFUNBOT_WAIT_ERROR * 24 * 60 * 60 * 1000) { return }
     const URLS = [
       'https://www.ipa.go.jp/security/alert-rss.rdf',
       'https://jvn.jp/rss/jvn.rdf',
