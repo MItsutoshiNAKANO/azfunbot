@@ -11,7 +11,12 @@ app.http('schedule', {
   handler: async (request, context) => {
     context.log(`${request.method} ${request.url}`)
     const client = df.getClient(context)
-    const entityId = new df.EntityId(entityName, 'schedule')
+    context.log({ request })
+    context.log({ request_query: request.query })
+    const key = request.query.get('key') || 'schedule'
+    context.log({ query_key: request.query.get('key') })
+    context.log({ key })
+    const entityId = new df.EntityId(entityName, key)
     switch (request.method) {
       case 'GET': {
         const response = await client.readEntityState(entityId)
