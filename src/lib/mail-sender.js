@@ -17,10 +17,7 @@ module.exports = async function (context, to, subject, text) {
   })
 
   const info = await transporter.sendMail({
-    from: process.env.AZFUNBOT_MAIL_FROM,
-    to,
-    subject,
-    text
+    from: process.env.AZFUNBOT_MAIL_FROM, to, subject, text
   })
 
   context.log(`Sent: ${info.messageId}`)
