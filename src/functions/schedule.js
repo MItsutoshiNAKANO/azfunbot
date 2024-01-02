@@ -1,9 +1,14 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+/**
+ * @file Schedule & Maintain Entities
+ * @license AGPL-3.0-or-later
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 'use strict'
 const { app } = require('@azure/functions')
 const df = require('durable-functions')
 const entityName = 'saver'
 
+/** Web Function.  */
 app.http('schedule', {
   methods: ['GET', 'POST'],
   authLevel: 'function',

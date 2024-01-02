@@ -1,7 +1,15 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-'use strict'
-/** Send a mail.
+/**
+ * @file Mail sender.
+ * @license AGPL-3.0-or-later
+ * SPDX-License-Identifier: AGPL-3.0-or-later
  * @see https://nodemailer.com/
+ */
+'use strict'
+/** Send mail.
+ * @param {*} context Azure Functions context object
+ * @param {string} to addr@spec
+ * @param {string} subject Mail subject
+ * @param {string} text text/plain
  */
 module.exports = async function (context, to, subject, text) {
   const nodemailer = require('nodemailer')

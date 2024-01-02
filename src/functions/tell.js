@@ -1,9 +1,14 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+/**
+ * @file Tell scheduled time.
+ * @license AGPL-3.0-or-later
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 'use strict'
 const { app } = require('@azure/functions')
 const df = require('durable-functions')
 const entityName = 'saver'
 
+/** Timer Azure Function.  */
 app.timer('tell', {
   schedule: process.env.TELL_SCHEDULE,
   extraInputs: [df.input.durableClient()],

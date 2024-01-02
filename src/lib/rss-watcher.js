@@ -1,11 +1,18 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
+/**
+ * @file RSS feeds watcher.
+ * @license AGPL-3.0-or-later
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
 'use strict'
 const Parser = require('rss-parser')
 const df = require('durable-functions')
-const entityName = 'saver'
 
-const parser = new Parser()
-
+/** Differ between current and previous feeds.
+ * @param {[{ link: string, title: string }]} current currnet feed array
+ * @param {[string]} previous previous feed array
+ * @param {InvocationContext} context Azure Functions context
+ * @returns {[{link: string, title: string}]} current - previous
+ */
 function differ (current, previous, context) {
   if (previous == null) {
     context.log('previous == null')
@@ -25,10 +32,19 @@ function differ (current, previous, context) {
   return diff
 }
 
+/** Parser instance.  */
+const parser = new Parser()
+
+/** Send new feeds to LINE.
+ * @param {[string]} urls RSS
+ * @param {*} myTimer
+ * @param {InvocationContext} context Azure Functions context
+ * @returns Line Message Response
+ */
 module.exports = async (urls, myTimer, context) => {
   // context.log({ urls, myTimer })
   const client = df.getClient(context)
-  const entityId = new df.EntityId(entityName, 'previous')
+  const entityId = new df.EntityId('saver', 'previous')
 
   let current = []
   for (const url of urls) {
