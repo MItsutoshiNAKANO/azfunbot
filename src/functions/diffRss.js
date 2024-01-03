@@ -14,11 +14,11 @@ app.timer('diffRss', {
   schedule: process.env.DIFFRSS_SCHEDULE,
   extraInputs: [durableClient()],
   handler: async (myTimer, context) => {
-    if (!canUseLine(context)) { return }
+    if (!await canUseLine(context)) { return }
     /** URLs list.
      * @type string[]  */
     const urls = await entity(keys.urls, context)
     if (urls == null || urls.length < 1) { return }
-    return watch(urls, myTimer, context)
+    return await watch(urls, myTimer, context)
   }
 })

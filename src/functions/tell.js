@@ -36,7 +36,7 @@ app.timer('tell', {
       return
     }
     await postEntity(newSchedule, entityId, client)
-    if (!canUseLine(context)) { return }
+    if (!await canUseLine(context)) { return }
     return await send(text, context)
   }
 })
