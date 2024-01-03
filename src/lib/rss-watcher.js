@@ -5,7 +5,9 @@
  */
 'use strict'
 const Parser = require('rss-parser')
-const df = require('durable-functions')
+const { getClient, newEntityId, entityState, postEntity, keys } =
+require('./entity')
+const send = require('./send-line')
 
 /** Differ between current and previous feeds.
  * @param {[{ link: string, title: string }]} current currnet feed array
@@ -42,10 +44,7 @@ const parser = new Parser()
  * @returns Line Message Response
  */
 module.exports = async (urls, myTimer, context) => {
-  // context.log({ urls, myTimer })
-  const client = df.getClient(context)
-  const entityId = new df.EntityId('saver', 'previous')
-
+  context.log({ urls, myTimer })
   let current = []
   for (const url of urls) {
     const feed = await parser.parseURL(url)
@@ -54,10 +53,9 @@ module.exports = async (urls, myTimer, context) => {
     }))
   }
   // context.log({ current })
-
-  const response = await client.readEntityState(entityId)
-  // context.log({ response })
-  const previous = response.entityState
+  const client = getClient(context)
+  const entityId = newEntityId(keys.previous)
+  const previous = await entityState(client, entityId)
   // context.log({ previous })
   const diff = differ(current, previous, context)
   // context.log({ diff })
@@ -65,7 +63,6 @@ module.exports = async (urls, myTimer, context) => {
     context.log('return void')
     return
   }
-  const send = require('./send-line')
-  await client.signalEntity(entityId, 'post', current.map((i) => i.link))
+  await postEntity(current.map((i) => i.link), entityId, client)
   return await send(diff.map(i => `${i.link} ${i.title}`), context)
 }
