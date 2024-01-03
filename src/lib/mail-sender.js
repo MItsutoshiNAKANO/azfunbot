@@ -5,6 +5,8 @@
  * @see https://nodemailer.com/
  */
 'use strict'
+const nodemailer = require('nodemailer')
+
 /** Send mail.
  * @param {*} context Azure Functions context object
  * @param {string} to addr@spec
@@ -12,8 +14,6 @@
  * @param {string} text text/plain
  */
 module.exports = async function (context, to, subject, text) {
-  const nodemailer = require('nodemailer')
-
   const transporter = nodemailer.createTransport({
     host: process.env.AZFUNBOT_MAIL_HOST,
     port: process.env.AZFUNBOT_MAIL_PORT,
