@@ -1,5 +1,5 @@
 /**
- * @file Schedule & Maintain Entities
+ * @file Maintain Entities.
  * @license AGPL-3.0-or-later
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
@@ -10,13 +10,13 @@ const {
 } = require('../lib/entity')
 
 /** Web Function.  */
-app.http('schedule', {
+app.http('maintain', {
   methods: ['GET', 'POST'],
   authLevel: 'function',
   extraInputs: [durableClient()],
   handler: async (request, context) => {
     context.log({ request })
-    const key = request.query.get('key') || keys.schedule
+    const key = request.query.get('key')
     context.log({ key })
     const client = getClient(context)
     const entityId = newEntityId(key)
@@ -24,9 +24,9 @@ app.http('schedule', {
       case 'GET':
         return { body: JSON.stringify(await entityState(client, entityId)) }
       case 'POST': {
-        const schedule = await request.json()
-        context.log({ schedule })
-        await postEntity(schedule, entityId, client)
+        const posted = await request.json()
+        context.log({ posted })
+        await postEntity(posted, entityId, client)
         return { body: 'accept' }
       }
     }
