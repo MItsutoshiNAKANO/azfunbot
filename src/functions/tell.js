@@ -5,18 +5,20 @@
  */
 'use strict'
 const { app } = require('@azure/functions')
-const df = require('durable-functions')
-const entityName = 'saver'
+const {
+  durableClient, getClient, newEntityId, entityState, postEntity, keys
+} = require('../lib/entity')
+const canUseLine = require('../lib/can-use-line')
+const send = require('../lib/send-line')
 
 /** Timer Azure Function.  */
 app.timer('tell', {
   schedule: process.env.TELL_SCHEDULE,
-  extraInputs: [df.input.durableClient()],
+  extraInputs: [durableClient()],
   handler: async (myTimer, context) => {
-    const client = df.getClient(context)
-    const entityId = new df.EntityId(entityName, 'schedule')
-    const response = await client.readEntityState(entityId)
-    const schedule = response.entityState
+    const client = getClient(context)
+    const entityId = newEntityId(keys.schedule)
+    const schedule = await entityState(client, entityId)
     if (schedule == null || schedule.length < 1) {
       context.log('The schedule is null')
       return
@@ -33,8 +35,8 @@ app.timer('tell', {
       context.log('The schedule is 0')
       return
     }
-    const send = require('../lib/send-line')
-    await client.signalEntity(entityId, 'post', newSchedule)
+    await postEntity(newSchedule, entityId, client)
+    if (!canUseLine(context)) { return }
     return await send(text, context)
   }
 })
