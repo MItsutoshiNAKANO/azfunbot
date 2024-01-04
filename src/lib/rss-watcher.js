@@ -39,16 +39,17 @@ const parser = new Parser()
 
 /** Send new feeds to LINE.
  * @param {[string]} urls RSS
- * @param {*} myTimer
+ * @param {*} myTimer Timer object
  * @param {InvocationContext} context Azure Functions context
  * @returns Line Message Response
  */
 module.exports = async (urls, myTimer, context) => {
   context.log({ urls, myTimer })
-  let current = []
+  const current = []
   for (const url of urls) {
     const feed = await parser.parseURL(url)
-    current = current.concat(feed.items.map(i => {
+    // context.log({ items: feed.items })
+    current.push(...feed.items.map(i => {
       return { link: i.link, title: i.title }
     }))
   }
