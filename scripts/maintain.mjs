@@ -4,6 +4,8 @@
  * @file Maintain AzFunBot.
  * @license AGPL-3.0-or-later
  * SPDX-License-Identifier: AGPL-3.0-or-later
+ * @description
+ *   example: ./scripts/maintain.mjs -X --json @secrets/schedule.json 'maintain:?code=&key=schedule'
  */
 /** @see https://nodejs.org/docs/latest-v20.x/api/child_process.html  */
 import { spawn } from 'node:child_process'
