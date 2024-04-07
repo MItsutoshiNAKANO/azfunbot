@@ -6,7 +6,7 @@
 'use strict'
 const { app } = require('@azure/functions')
 const {
-  durableClient, getClient, newEntityId, entityState, postEntity, keys
+  durableClient, getClient, newEntityId, entityState, postEntity
 } = require('../lib/entity')
 
 /** Web Function.  */
