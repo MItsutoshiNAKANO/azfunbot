@@ -1,4 +1,4 @@
-#! /bin/sh -eu
+#! /bin/bash -eu
 
 dir=$(dirname "$0")
 cd "$dir"
