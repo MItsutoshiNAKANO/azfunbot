@@ -30,6 +30,6 @@
   "main": "src/functions/*.js",
   "devDependencies": {
     "standard": ">=17.1.0",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.0"
   }
 }
