@@ -5,16 +5,19 @@
  * @license AGPL-3.0-or-later
  * SPDX-License-Identifier: AGPL-3.0-or-later
  * @description
- *   example: ./scripts/maintain.mjs -X --json @secrets/schedule.json 'maintain:?code=&key=schedule'
+ *   example:
+ *      ./scripts/maintain.mjs -X POST --data @secrets/schedule.json 'localtest:?key=schedule'
+ *      ./scripts/maintain.mjs -X POST --data @secrets/schedule.json 'maintain:?code=&key=schedule'
+ *      ./scripts/maintain.mjs -X POST --json @secrets/schedule.json 'maintain:?code=&key=schedule'
  */
 /** @see https://nodejs.org/docs/latest-v20.x/api/child_process.html  */
 import { spawn } from 'node:child_process'
 import { exit } from 'node:process'
-import { fileURLToPath } from 'url'
 import path from 'path'
+import { fileURLToPath } from 'url'
 /** @see https://github.com/yargs/yargs/  */
-import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
+import yargs from 'yargs/yargs'
 
 const scriptPath = fileURLToPath(new URL(import.meta.url))
 const dirname = path.dirname(scriptPath)
