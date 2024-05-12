@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 'use strict'
-const { messagingApi, HTTPError } = require('@line/bot-sdk')
+const { messagingApi, HTTPFetchError } = require('@line/bot-sdk')
 const sendMail = require('./mail-sender')
 const { postEntityByKey, keys } = require('./entity')
 
@@ -32,7 +32,7 @@ module.exports = async (lines, context) => {
       sendMail(context, process.env.AZFUNBOT_MAIL_TO_ADMIN,
         'LINE was failed', err)
     } catch (mailErr) { context.error(mailErr) }
-    if (err instanceof HTTPError && err.statusCode === 429) {
+    if (err instanceof HTTPFetchError && err.status === 429) {
       await postEntityByKey(new Date(), keys.lastRateError, context)
     }
     throw err
