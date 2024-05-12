@@ -1,6 +1,6 @@
 {
   "name": "azfunbot",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Bot for Azure Functions 4",
   "homepage": "https://github.com/MItsutoshiNAKANO/azfunbot/",
   "bugs": {
@@ -16,7 +16,7 @@
     "azurite": "azurite --silent --location .cache/azurite --debug .cache/azurite/debug.log",
     "start": "func start",
     "clean-azurite": "rm -rf .cache/azurite/",
-    "deploy": "func azure functionapp publish DiffRss"
+    "deploy": "func azure functionapp publish azfunbot --javascript"
   },
   "dependencies": {
     "@azure/functions": "^4.4.0",

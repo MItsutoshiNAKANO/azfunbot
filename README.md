@@ -16,9 +16,9 @@ vim secrets/create-remote.rc.bash
 eg.
 
 ```bash
-resource_group="${resource_group-DiffRss-rg}"
+resource_group="${resource_group-AzFunBot-rg}"
 location="${location-japanwest}" 
-storage_name="${storage_name-diffrssstorage}"
+storage_name="${storage_name-azfunbotstorage}"
 sku="${sku-Standard_LRS}"
 ```
 
@@ -59,5 +59,5 @@ DIFFRSS_MAX_CHAR_LIMIT={Max Limit for LINE Text}
 e.g.
 
 ```bash
-func azure functionapp publish DiffRss
+func azure functionapp publish AzFunBot
 ```

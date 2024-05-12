@@ -1,5 +1,5 @@
 #! /bin/bash -eux
-# SPDX-License-Identifier: AGPL-3.0-or-later
+#* SPDX-License-Identifier: AGPL-3.0-or-later
 
 scripts_dir=$(dirname $0)
 project_dir="$scripts_dir/.."
@@ -10,13 +10,13 @@ echo '1st, you must login to Azure. Type:
 ' >&2
 
 # Define them in "$project_dir/secrets/create-remote.rc.bash"
-#   resource_group="${resource_group-DiffRss-rg}"
-#   location="${location-japanwest}" 
-#   storage_name="${storage_name-diffrssstorage}"
+#   resource_group="${resource_group-AzFunBot-rg}"
+#   location="${location-japanwest}"
+#   storage_name="${storage_name-azfunbotstorage}"
 #   sku="${sku-Standard_LRS}"
 source "$project_dir/secrets/create-remote.rc.bash"
 
-app_name='DiffRss'
+app_name='azfunbot'
 function_ver='4'
 node_ver='20'
 os='Windows'
