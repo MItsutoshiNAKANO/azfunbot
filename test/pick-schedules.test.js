@@ -1,3 +1,9 @@
+/**
+ * @license AGPL-3.0-or-later
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ * @file Test pick-schedules.js
+ */
+
 import { describe, expect, it } from 'vitest'
 const pickSchedules = require('../src/lib/pick-schedules')
 
