@@ -6,9 +6,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  * @description
  *   example:
- *      ./scripts/maintain.mjs -X POST --data @secrets/schedule.json 'localtest:?key=schedule'
- *      ./scripts/maintain.mjs -X POST --data @secrets/schedule.json 'maintain:?code=&key=schedule'
- *      ./scripts/maintain.mjs -X POST --json @secrets/schedule.json 'maintain:?code=&key=schedule'
+ *      ./scripts/maintain.mjs -D - -X POST --json @secrets/schedule.json 'localtest:?key=schedule'
+ *      ./scripts/maintain.mjs -D - -X POST --json @secrets/schedule.json 'maintain:?code=&key=schedule'
  */
 /** @see https://nodejs.org/docs/latest-v20.x/api/child_process.html  */
 import { spawn } from 'node:child_process'
@@ -36,7 +35,9 @@ const urls = parsed._.map(a => {
   for (const [key, value] of aliases) { a = a.replace(key, value) }
   return a
 })
-const curl = spawn('curl', curlArgs.concat(urls))
+const commandLine = ['curl', curlArgs.concat(urls)]
+console.warn(commandLine)
+const curl = spawn(...commandLine)
 curl.stdout.on('data', data => console.log(`${data}`))
 curl.stderr.on('data', data => console.error(`${data}`))
 curl.on('close', code => exit(code))
