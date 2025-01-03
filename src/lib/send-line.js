@@ -15,7 +15,7 @@ const { postEntityByKey, keys } = require('./entity')
  * @see https://github.com/line/line-bot-sdk-nodejs/blob/master/docs/guide/client.md
  */
 module.exports = async (lines, context) => {
-  let limit = Math.min(process.env.DIFFRSS_MAX_CHAR_LIMIT, 5000)
+  let limit = process.env.DIFFRSS_MAX_CHAR_LIMIT ?? 5000
   const text = lines.filter((l) => (limit -= l.length + 2) > 0).join('\r\n')
   context.log({ lines: lines.length, length: text.length })
   if (text.length < 1) { return }
