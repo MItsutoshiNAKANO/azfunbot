@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  * SPDX-License-Identifier: AGPL-3.0-or-later
  * @description
- *   example:
+ *   examples:
  *      ./scripts/maintain.mjs -D - -X POST --json @secrets/schedule.json 'localtest:?key=schedule'
  *      ./scripts/maintain.mjs -D - -X POST --json @secrets/schedule.json 'maintain:?code=&key=schedule'
  */
