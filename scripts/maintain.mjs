@@ -11,7 +11,7 @@
  *     ./scripts/maintain.mjs -k -X POST --json @secrets/schedule.json \
  *       'localtest:?key=schedule'
  *     ./scripts/maintain.mjs -k -X GET 'maintain:?code=&key=schedule'
- *     ./scripts/maintain.mjs -k-X POST --json @secrets/schedule.json \
+ *     ./scripts/maintain.mjs -k -X POST --json @secrets/schedule.json \
  *       'maintain:?code=&key=schedule'
  */
 /** @see https://nodejs.org/docs/latest-v20.x/api/child_process.html  */
