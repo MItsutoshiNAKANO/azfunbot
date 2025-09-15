@@ -47,6 +47,7 @@ module.exports = async (urls, myTimer, context) => {
   context.log({ urls, myTimer })
   const current = []
   for (const url of urls) {
+    context.log(`Parsing ${url}`)
     const feed = await parser.parseURL(url)
     // context.log({ items: feed.items })
     current.push(...feed.items.map(i => {
