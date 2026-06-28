@@ -19,15 +19,17 @@ source "$project_dir/secrets/create-remote.rc.bash"
 app_name='azfunbot'
 function_ver='4'
 node_ver='24'
-os='Windows'
+os='Linux'
 
 az group create --name "$resource_group" --location "$location"
-az storage account create --name "$storage_name" --location "$location" --resource-group "$resource_group" --sku "$sku"
-az functionapp create --resource-group "$resource_group" --consumption-plan-location "$location" --os-type "$os" --runtime node --runtime-version "$node_ver" --functions-version "$function_ver" --name "$app_name" --storage-account "$storage_name"
+sleep 10
+az storage account create --name "$storage_name" --location "$location" --resource-group "$resource_group" --sku "$sku" # --allow-blob-public-access false --allow-shared-key-access false
+sleep 10
+az functionapp create --resource-group "$resource_group" --name "$app_name" --flexconsumption-location "$location" --os-type "$os" --runtime node --runtime-version "$node_ver" --storage-account "$storage_name" # --deployment-storage-auth-type "UserAssignedIdentity" --deployment-storage-auth-value "func-host-storage-user"
 
 echo "If you want to deploy $app_name, you type:
 
-    func azure functionapp publish $app_name
+    func azure functionapp publish $app_name --javascript
 
 If you want to delete, you type:
 
