@@ -4,7 +4,7 @@
 scripts_dir=$(dirname $0)
 project_dir="$scripts_dir/.."
 
-echo '1st, you must login to Azure. Type: 
+echo '1st, you must login to Azure. Type:
     az login
 @See https://docs.microsoft.com/ja-jp/azure/azure-functions/create-first-function-cli-node?tabs=azure-cli%2Cbrowser
 ' >&2
@@ -18,7 +18,7 @@ source "$project_dir/secrets/create-remote.rc.bash"
 
 app_name='azfunbot'
 function_ver='4'
-node_ver='20'
+node_ver='24'
 os='Windows'
 
 az group create --name "$resource_group" --location "$location"

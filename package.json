@@ -1,6 +1,6 @@
 {
   "name": "azfunbot",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Bot for Azure Functions 4",
   "homepage": "https://github.com/MItsutoshiNAKANO/azfunbot/",
   "bugs": {
@@ -19,17 +19,17 @@
     "deploy": "func azure functionapp publish azfunbot --javascript"
   },
   "dependencies": {
-    "@azure/functions": "^4.8.0",
-    "@line/bot-sdk": "^10.2.0",
-    "durable-functions": "^3.2.0",
+    "@azure/functions": "^4.16.1",
+    "@line/bot-sdk": "^10.8.0",
+    "durable-functions": "^3.4.0",
     "evaljson": "^6.0.4",
-    "nodemailer": "^7.0.6",
+    "nodemailer": "^9.0.1",
     "rss-parser": "^3.13.0",
     "yargs": "^18.0.0"
   },
   "main": "src/functions/*.js",
   "devDependencies": {
     "standard": ">=17.1.2",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.6"
   }
 }
