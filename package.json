@@ -20,16 +20,16 @@
   },
   "dependencies": {
     "@azure/functions": "^4.16.1",
-    "@line/bot-sdk": "^10.8.0",
+    "@line/bot-sdk": "^11.1.0",
     "durable-functions": "^3.4.0",
     "evaljson": "^6.0.4",
-    "nodemailer": "^9.0.1",
+    "nodemailer": "^9.0.3",
     "rss-parser": "^3.13.0",
     "yargs": "^18.0.0"
   },
   "main": "src/functions/*.js",
   "devDependencies": {
     "standard": ">=17.1.2",
-    "vitest": "^3.2.6"
+    "vitest": "^4.1.9"
   }
 }

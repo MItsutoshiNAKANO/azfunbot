@@ -4,9 +4,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 'use strict'
-const { messagingApi, HTTPFetchError } = require('@line/bot-sdk')
-const sendMail = require('./mail-sender')
-const { postEntityByKey, keys } = require('./entity')
+const { LineBotClient, HTTPFetchError } = require('@line/bot-sdk')
 
 /**
  * Send the LINE message.
@@ -19,21 +17,20 @@ module.exports = async (lines, context) => {
   const text = lines.filter((l) => (limit -= l.length + 2) > 0).join('\r\n')
   context.log({ lines: lines.length, length: text.length })
   if (text.length < 1) { return }
-  const MessagingApiClient = messagingApi.MessagingApiClient
+
+  const client = LineBotClient.fromChannelAccessToken({
+    channelAccessToken: process.env.LINE_ACCESS_TOKEN
+  })
   try {
-    return await new MessagingApiClient({
-      channelAccessToken: process.env.LINE_ACCESS_TOKEN
-    }).pushMessage({
+    return await client.pushMessage({
       to: process.env.LINE_ID, messages: [{ type: 'text', text }]
     })
   } catch (err) {
     context.error(err)
-    try {
-      sendMail(context, process.env.AZFUNBOT_MAIL_TO_ADMIN,
-        'LINE was failed', err)
-    } catch (mailErr) { context.error(mailErr) }
-    if (err instanceof HTTPFetchError && err.status === 429) {
-      await postEntityByKey(new Date(), keys.lastRateError, context)
+    if (err instanceof HTTPFetchError) {
+      context.error({
+        status: err.status, headers: err.headers, body: err.body
+      })
     }
     throw err
   }
