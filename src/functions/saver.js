@@ -21,5 +21,9 @@ df.app.entity('saver', (context) => {
       context.df.return(value)
       break
     }
+    case 'delete': {
+      context.df.destructOnExit()
+      break
+    }
   }
 })

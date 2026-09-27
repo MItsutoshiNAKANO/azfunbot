@@ -10,9 +10,10 @@ const { LineBotClient, HTTPFetchError } = require('@line/bot-sdk')
  * Send the LINE message.
  * @param {[string]} lines Mail body.
  * @param {InvocationContext} context Azure Functions context.
+ * @param {string} [to] Destination ID. Defaults to LINE_ID.
  * @see https://github.com/line/line-bot-sdk-nodejs/blob/master/docs/guide/client.md
  */
-module.exports = async (lines, context) => {
+module.exports = async (lines, context, to = process.env.LINE_ID) => {
   let limit = process.env.DIFFRSS_MAX_CHAR_LIMIT ?? 5000
   const text = lines.filter((l) => (limit -= l.length + 2) > 0).join('\r\n')
   context.log({ lines: lines.length, length: text.length })
@@ -23,7 +24,7 @@ module.exports = async (lines, context) => {
   })
   try {
     return await client.pushMessage({
-      to: process.env.LINE_ID, messages: [{ type: 'text', text }]
+      to, messages: [{ type: 'text', text }]
     })
   } catch (err) {
     context.error(err)

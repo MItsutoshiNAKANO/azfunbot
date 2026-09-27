@@ -1,5 +1,5 @@
 /**
- * @file Differ feeds between yesterday and today.
+ * @file Notify new items of the RSS feeds.
  * @license AGPL-3.0-or-later
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
@@ -7,7 +7,7 @@
 const { app } = require('@azure/functions')
 const { durableClient, entity, keys } = require('../lib/entity')
 const canUseLine = require('../lib/can-use-line')
-const watch = require('../lib/rss-watcher')
+const { watch } = require('../lib/rss-watcher')
 
 /** Registers diffRss Timer Function.  */
 app.timer('diffRss', {
@@ -15,10 +15,9 @@ app.timer('diffRss', {
   extraInputs: [durableClient()],
   handler: async (myTimer, context) => {
     if (!await canUseLine(context)) { return }
-    /** URLs list.
-     * @type string[]  */
+    /** Contents of the "urls" entity: [{ key, url }, ...].  */
     const urls = await entity(keys.urls, context)
-    if (urls == null || urls.length < 1) { return }
-    return await watch(urls, myTimer, context)
+    if (urls == null || (Array.isArray(urls) && urls.length < 1)) { return }
+    return await watch(urls, context)
   }
 })

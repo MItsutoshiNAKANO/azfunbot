@@ -5,30 +5,16 @@
  */
 'use strict'
 const { app } = require('@azure/functions')
-const {
-  durableClient, getClient, newEntityId, entityState, postEntity
-} = require('../lib/entity')
+const { durableClient, getClient } = require('../lib/entity')
+const handleMaintain = require('../lib/maintain-handler')
 
 /** Web Function.  */
 app.http('maintain', {
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'DELETE'],
   authLevel: 'function',
   extraInputs: [durableClient()],
   handler: async (request, context) => {
     context.log({ request })
-    const key = request.query.get('key')
-    context.log({ key })
-    const client = getClient(context)
-    const entityId = newEntityId(key)
-    switch (request.method) {
-      case 'GET':
-        return { body: JSON.stringify(await entityState(client, entityId)) }
-      case 'POST': {
-        const posted = await request.json()
-        context.log({ posted })
-        await postEntity(posted, entityId, client)
-        return { body: 'accept' }
-      }
-    }
+    return await handleMaintain(request, context, getClient(context))
   }
 })
